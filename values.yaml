@@ -1,0 +1,18 @@
+images:
+  tridentInstaller: kubernetes-tools:latest
+  registry: 
+
+backend:
+  version: 1
+  storageDriverName: ontap-nas
+  storageDriverName: ontap-nas
+  # managementLIF: 
+  # dataLIF:
+  # svm: 
+  # username: 
+  # password: 
+
+storageclass:
+  name: ontap-basic
+  default: true
+  fstype: ontap-nas

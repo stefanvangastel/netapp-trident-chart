@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: trident-installer
+  namespace: trident
+spec:
+  backoffLimit: 5
+  completions: 1
+  parallelism: 1
+  ttlSecondsAfterFinished: 100
+  selector:
+    matchLabels:
+      job-name: trident-installer
+  template:
+    metadata:
+      labels:
+        job-name: trident-installer
+    spec:
+      containers:
+      - command: ["/bin/bash","-c"]
+        args: ["tridentctl uninstall -n trident -d && tridentctl install -n trident -d --image-registry {{ .Values.images.registry }} && tridentctl -n trident create backend -f /trident/backend.json"]
+        image: {{ .Values.images.tridentInstaller }}
+        imagePullPolicy: Always
+        name: trident-installer
+        volumeMounts:
+        - mountPath: /trident
+          name: trident-backend
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      serviceAccount: trident-installer
+      serviceAccountName: trident-installer
+      volumes:
+      - name: trident-backend
+        secret:
+          defaultMode: 256
+          optional: false
+          secretName: trident-backend

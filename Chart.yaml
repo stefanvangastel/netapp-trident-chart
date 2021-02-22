@@ -1,0 +1,14 @@
+apiVersion: v1
+name: netapp-trident
+version: 20.04
+appVersion: 20.04
+description: NetApp Trident 
+keywords:
+  - netapp
+  - trident
+    - csi
+  - storage
+maintainers:
+  - name: Stefan van Gastel
+    email: stefanvangastel@gmail.com
+engine: gotpl
